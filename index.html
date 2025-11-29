@@ -1,167 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formas de Pago - Teclab / Siglo 21</title>
-
-    <!-- Estilos -->
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-        }
-
-        header {
-            background: #0056D2;
-            color: white;
-            padding: 25px 20px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 15px;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 12px;
-            font-size: 17px;
-            border: 2px solid #d5d5d5;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-
-        .section {
-            background: #ffffff;
-            margin-bottom: 20px;
-            border-radius: 14px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            transition: 0.3s;
-        }
-
-        .section:hover {
-            transform: scale(1.01);
-        }
-
-        .section h2 {
-            font-size: 22px;
-            cursor: pointer;
-            margin: 0;
-            color: #333;
-        }
-
-        .content {
-            display: none;
-            margin-top: 12px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .tag {
-            display: inline-block;
-            background: #e7f0ff;
-            padding: 6px 10px;
-            margin: 3px;
-            border-radius: 6px;
-            font-size: 13px;
-            color: #0056D2;
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formas de Pago - Completo</title>
+  <style>
+    :root{--verde:#0c3b2e;--verde2:#2e5e4e;--bg:#f4f7f5}
+    body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;color:#1a1a1a}
+    header{background:var(--verde);color:#fff;padding:18px 16px;text-align:center;font-weight:700}
+    .wrap{max-width:1100px;margin:26px auto;padding:18px}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .controls input,.controls select{padding:10px 12px;border-radius:8px;border:1px solid #cfd8d6;font-size:15px}
+    .controls .btn{background:var(--verde);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+    .card{background:#fff;border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead th{background:var(--verde2);color:white;padding:10px;text-align:left;position:sticky;top:0}
+    tbody td{padding:10px;border-bottom:1px solid #eee}
+    tbody tr:hover{background:#f2fff7}
+    .tag{display:inline-block;padding:4px 8px;border-radius:6px;background:#e7f4ee;color:var(--verde);font-weight:600;margin-right:6px}
+    .small{font-size:13px;color:#555}
+    .results-info{margin:10px 0;color:#333}
+    @media(max-width:800px){.controls{flex-direction:column}}
+  </style>
 </head>
-
 <body>
-
-<header>Formas de Pago – Teclab & Siglo 21</header>
-
-<div class="container">
-
-    <!-- BUSCADOR -->
-    <input type="text" id="search" class="search-box" placeholder="Buscar: crédito, débito, bancos, contado, financiación…">
-
-    <!-- SECCIONES -->
-
-    <div class="section">
-        <h2 onclick="toggleContent(this)">💳 Tarjetas de Crédito</h2>
-        <div class="content">
-            <span class="tag">Crédito</span>
-            <span class="tag">Visa</span>
-            <span class="tag">Mastercard</span>
-            <p>✔ Cuotas hasta 12 cuotas según promoción vigente.</p>
-            <p>✔ Tarjetas: Visa, Mastercard, Cabal, American Express.</p>
-            <p>✔ No se cobra interés en promociones bancarias activas.</p>
-        </div>
+  <header>Formas de Pago (Completo) — Teclab / Siglo 21</header>
+  <div class="wrap">
+    <div class="controls">
+      <input id="q" placeholder="Buscar por banco, marca, procesador, plan u observación..." />
+      <select id="filterProc">
+        <option value="">Todos los procesadores</option>
+        <option value="MOBEX">MOBEX</option>
+        <option value="PTT">PTT</option>
+        <option value="POS NET">POS NET</option>
+        <option value="TACA TACA">TACA TACA</option>
+        <option value="-">Sin procesador</option>
+      </select>
+      <button class="btn" id="clear">Limpiar</button>
     </div>
 
-    <div class="section">
-        <h2 onclick="toggleContent(this)">💰 Pago al Contado</h2>
-        <div class="content">
-            <span class="tag">Contado</span>
-            <span class="tag">Transferencia</span>
-            <p>✔ Transferencia bancaria.</p>
-            <p>✔ Depósito en efectivo.</p>
-            <p>✔ Wallets: Mercado Pago, Ualá o MODO.</p>
-        </div>
+    <div class="card">
+      <div class="results-info" id="info">Mostrando todos los registros</div>
+      <div style="overflow:auto; max-height:65vh">
+        <table id="tabla">
+          <thead>
+            <tr>
+              <th>Marca</th>
+              <th>Banco</th>
+              <th>Plan</th>
+              <th>Recargo</th>
+              <th>Procesador</th>
+              <th>Descuento adicional</th>
+              <th>Observaciones</th>
+            </tr>
+          </thead>
+          <tbody id="body"></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <div class="section">
-        <h2 onclick="toggleContent(this)">🏦 Transferencias Bancarias</h2>
-        <div class="content">
-            <span class="tag">CBU</span>
-            <span class="tag">Alias</span>
-            <p>✔ Se envían los datos bancarios al momento de la inscripción.</p>
-            <p>✔ Acreditación inmediata.</p>
-        </div>
-    </div>
+  <script>
+    // Datos completos basados en la información provista. Reemplazos: MUBEX->MOBEX, Paypertic->PTT
+    const data = [
+      {marca:"Tarjeta débito/crédito", banco:"TODOS LOS BANCOS", plan:"1 CUOTA", recargo:"0%", proc:"MOBEX", desc:"10%", obs:"No aplicable a VISA ICBC, Hipotecario, Corrientes, Ciudad"},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO HIPOTECARIO", plan:"3 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO CORRIENTES", plan:"3 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:"Banco Corrientes con 5% de reintegro"},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO LA PAMPA", plan:"4 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO HIPOTECARIO", plan:"6 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO CORRIENTES", plan:"6 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:"Banco Corrientes con 5% de reintegro"},
+      {marca:"TC - VISA", banco:"BANCO ICBC", plan:"6 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO LA PAMPA", plan:"6 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO CIUDAD", plan:"3 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"TC - VISA/MASTERCARD", banco:"BANCO CIUDAD", plan:"6 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"Pago en efectivo", banco:"Pagofacil / Rapipago / CobroExpress / Pago mis cuentas", plan:"-", recargo:"0%", proc:"-", desc:"NO APLICA", obs:""},
+      {marca:"VISA Y MASTERCARD (REGLA GENERAL)", banco:"REGLA GENERAL", plan:"3 CUOTAS", recargo:"6%", proc:"PTT", desc:"NO APLICA", obs:"No aplicable a Santander, Galicia, BBVA, Nacion, Macro y Naranja"},
+      {marca:"VISA Y MASTERCARD (REGLA GENERAL)", banco:"REGLA GENERAL", plan:"3 CUOTAS (EXCEPCION)", recargo:"12%", proc:"PTT", desc:"NO APLICA", obs:"Aplicable únicamente a Santander, Galicia, BBVA, Nacion, Macro y Naranja"},
+      {marca:"VISA Y MASTERCARD (REGLA GENERAL)", banco:"REGLA GENERAL", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA Y MASTERCARD", banco:"BBVA", plan:"6 CUOTAS", recargo:"12%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"VISA Y MASTERCARD", banco:"BBVA", plan:"6 CUOTAS", recargo:"5%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO PROVINCIA BS AS", plan:"6 CUOTAS", recargo:"8%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO PROVINCIA BS AS", plan:"6 CUOTAS", recargo:"5%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO SANTANDER RIO", plan:"6 CUOTAS", recargo:"8%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO SANTANDER RIO", plan:"6 CUOTAS", recargo:"5%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO GALICIA", plan:"6 CUOTAS", recargo:"10%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO GALICIA", plan:"6 CUOTAS", recargo:"5%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"VISA Y MASTERCARD", banco:"MACRO", plan:"6 CUOTAS", recargo:"12%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"VISA Y MASTERCARD", banco:"MACRO", plan:"6 CUOTAS", recargo:"5%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"VISA Y MASTERCARD", banco:"NARANJA", plan:"6 CUOTAS", recargo:"24%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"VISA Y MASTERCARD", banco:"NARANJA", plan:"6 CUOTAS", recargo:"10%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"AMEX", banco:"AMEX", plan:"6 CUOTAS", recargo:"22%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"AMEX", banco:"AMEX", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"AMEX BANCARIZADAS", banco:"AMEX BANCARIZADAS", plan:"3 CUOTAS", recargo:"20%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"AMEX BANCARIZADAS", banco:"AMEX BANCARIZADAS", plan:"6 CUOTAS", recargo:"40%", proc:"PTT", desc:"NO APLICA", obs:"No aplicable a AMEX Galicia"},
+      {marca:"AMEX", banco:"BANCO GALICIA", plan:"6 CUOTAS", recargo:"10%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para RI"},
+      {marca:"AMEX", banco:"BANCO GALICIA", plan:"6 CUOTAS", recargo:"5%", proc:"PTT", desc:"NO APLICA", obs:"Solamente para NI"},
+      {marca:"NARANJA", banco:"NARANJA", plan:"PLAN Z", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"NARANJA", banco:"NARANJA", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"NARANJA", banco:"NARANJA", plan:"12 CUOTAS", recargo:"80%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SAN JUAN", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SAN JUAN", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SANTA CRUZ", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SANTA CRUZ", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SANTA FE", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SANTA FE", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"ENTRE RIOS", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"ENTRE RIOS", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"VISA/MC", banco:"SUPERVIELLE", plan:"9 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"AMEX", banco:"REBANKING", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"CABAL", banco:"-", plan:"3 CUOTAS", recargo:"17%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"CABAL", banco:"-", plan:"6 CUOTAS", recargo:"32%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"DATA", banco:"-", plan:"3 CUOTAS", recargo:"5%", proc:"POS NET", desc:"NO APLICA", obs:""},
+      {marca:"DATA", banco:"-", plan:"6 CUOTAS", recargo:"10%", proc:"POS NET", desc:"NO APLICA", obs:""},
+      {marca:"SOL", banco:"-", plan:"3 CUOTAS", recargo:"9%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"SOL", banco:"-", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"COOPEPLUS", banco:"-", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"COOPEPLUS", banco:"-", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"PATAGONIA 365", banco:"-", plan:"3 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"PATAGONIA 365", banco:"-", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"FAVACARD", banco:"-", plan:"3 CUOTAS", recargo:"33%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"FAVACARD", banco:"-", plan:"6 CUOTAS", recargo:"60%", proc:"PTT", desc:"NO APLICA", obs:""},
+      {marca:"SUCREDITO", banco:"-", plan:"3 CUOTAS", recargo:"8%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"SUCREDITO", banco:"-", plan:"6 CUOTAS", recargo:"0%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"GO CUOTAS", banco:"-", plan:"Hasta 4 cuotas", recargo:"15%", proc:"MOBEX", desc:"NO APLICA", obs:""},
+      {marca:"VISA Y MASTERCARD", banco:"BANCO NACIÓN - NATIVA", plan:"6 CUOTAS", recargo:"0%", proc:"PTT", desc:"NO APLICA", obs:"No aplica Agro/Business || 10% reintegro con tope 40.000"},
+      {marca:"VISA Y MASTERCARD", banco:"BANCOR", plan:"6 CUOTAS", recargo:"0%", proc:"TACA TACA", desc:"NO APLICA", obs:"Bines de promoción"}
+    ];
 
-    <div class="section">
-        <h2 onclick="toggleContent(this)">📱 Mercado Pago / MODO</h2>
-        <div class="content">
-            <span class="tag">QR</span>
-            <span class="tag">Wallet</span>
-            <p>✔ Pago con QR.</p>
-            <p>✔ Posibilidad de financiación según promociones vigentes en la billetera.</p>
-        </div>
-    </div>
+    const body = document.getElementById('body');
+    const info = document.getElementById('info');
+    const q = document.getElementById('q');
+    const proc = document.getElementById('filterProc');
+    const clear = document.getElementById('clear');
 
-    <div class="section">
-        <h2 onclick="toggleContent(this)">📦 Planes de Financiación</h2>
-        <div class="content">
-            <span class="tag">Financiación</span>
-            <span class="tag">Cuotas</span>
-            <p>✔ Financiación directa de la institución.</p>
-            <p>✔ Planes desde 3 hasta 12 cuotas.</p>
-            <p>✔ Disponible para: Diplomaturas, Cursos Certificados y Tecnicaturas.</p>
-        </div>
-    </div>
+    function render(filter=''){
+      const term = filter.toLowerCase();
+      const procFilter = proc.value;
+      body.innerHTML = '';
+      const results = data.filter(d => {
+        const matchesTerm = [d.marca,d.banco,d.plan,d.recargo,d.proc,d.desc,d.obs].join(' ').toLowerCase().includes(term);
+        const matchesProc = procFilter ? d.proc===procFilter : true;
+        return matchesTerm && matchesProc;
+      });
 
-</div>
+      results.forEach(r=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${r.marca}</strong></td>
+          <td>${r.banco}</td>
+          <td>${r.plan}</td>
+          <td>${r.recargo}</td>
+          <td>${r.proc}</td>
+          <td>${r.desc}</td>
+          <td class="small">${r.obs}</td>
+        `;
+        body.appendChild(tr);
+      });
 
-<!-- JS -->
-<script>
-    function toggleContent(element) {
-        const content = element.nextElementSibling;
-        content.style.display = content.style.display === "block" ? "none" : "block";
+      info.innerText = `Mostrando ${results.length} de ${data.length} registros`;
     }
 
-    // Buscador general
-    document.getElementById("search").addEventListener("keyup", function() {
-        let text = this.value.toLowerCase();
-        let sections = document.querySelectorAll(".section");
+    q.addEventListener('input', ()=>render(q.value));
+    q.addEventListener('keypress', e=>{ if(e.key==='Enter') render(q.value); });
+    proc.addEventListener('change', ()=>render(q.value));
+    clear.addEventListener('click', ()=>{ q.value=''; proc.value=''; render(''); });
 
-        sections.forEach(sec => {
-            let secText = sec.innerText.toLowerCase();
-            sec.style.display = secText.includes(text) ? "block" : "none";
-        });
-    });
-</script>
-
+    render('');
+  </script>
 </body>
 </html>
