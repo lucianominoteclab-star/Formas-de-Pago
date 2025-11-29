@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formas de Pago - Teclab / Siglo 21</title>
+
+    <!-- Estilos -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        header {
+            background: #0056D2;
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 17px;
+            border: 2px solid #d5d5d5;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .section {
+            background: #ffffff;
+            margin-bottom: 20px;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.01);
+        }
+
+        .section h2 {
+            font-size: 22px;
+            cursor: pointer;
+            margin: 0;
+            color: #333;
+        }
+
+        .content {
+            display: none;
+            margin-top: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e7f0ff;
+            padding: 6px 10px;
+            margin: 3px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #0056D2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>Formas de Pago – Teclab & Siglo 21</header>
+
+<div class="container">
+
+    <!-- BUSCADOR -->
+    <input type="text" id="search" class="search-box" placeholder="Buscar: crédito, débito, bancos, contado, financiación…">
+
+    <!-- SECCIONES -->
+
+    <div class="section">
+        <h2 onclick="toggleContent(this)">💳 Tarjetas de Crédito</h2>
+        <div class="content">
+            <span class="tag">Crédito</span>
+            <span class="tag">Visa</span>
+            <span class="tag">Mastercard</span>
+            <p>✔ Cuotas hasta 12 cuotas según promoción vigente.</p>
+            <p>✔ Tarjetas: Visa, Mastercard, Cabal, American Express.</p>
+            <p>✔ No se cobra interés en promociones bancarias activas.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 onclick="toggleContent(this)">💰 Pago al Contado</h2>
+        <div class="content">
+            <span class="tag">Contado</span>
+            <span class="tag">Transferencia</span>
+            <p>✔ Transferencia bancaria.</p>
+            <p>✔ Depósito en efectivo.</p>
+            <p>✔ Wallets: Mercado Pago, Ualá o MODO.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 onclick="toggleContent(this)">🏦 Transferencias Bancarias</h2>
+        <div class="content">
+            <span class="tag">CBU</span>
+            <span class="tag">Alias</span>
+            <p>✔ Se envían los datos bancarios al momento de la inscripción.</p>
+            <p>✔ Acreditación inmediata.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 onclick="toggleContent(this)">📱 Mercado Pago / MODO</h2>
+        <div class="content">
+            <span class="tag">QR</span>
+            <span class="tag">Wallet</span>
+            <p>✔ Pago con QR.</p>
+            <p>✔ Posibilidad de financiación según promociones vigentes en la billetera.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 onclick="toggleContent(this)">📦 Planes de Financiación</h2>
+        <div class="content">
+            <span class="tag">Financiación</span>
+            <span class="tag">Cuotas</span>
+            <p>✔ Financiación directa de la institución.</p>
+            <p>✔ Planes desde 3 hasta 12 cuotas.</p>
+            <p>✔ Disponible para: Diplomaturas, Cursos Certificados y Tecnicaturas.</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script>
+    function toggleContent(element) {
+        const content = element.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+    // Buscador general
+    document.getElementById("search").addEventListener("keyup", function() {
+        let text = this.value.toLowerCase();
+        let sections = document.querySelectorAll(".section");
+
+        sections.forEach(sec => {
+            let secText = sec.innerText.toLowerCase();
+            sec.style.display = secText.includes(text) ? "block" : "none";
+        });
+    });
+</script>
+
+</body>
+</html>
